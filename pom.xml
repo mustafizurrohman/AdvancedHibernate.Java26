@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.mustafizur</groupId>
+  <artifactId>advanced-hibernate-java26</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>AdvancedHibernate.Java26</name>
+
+  <modules>
+    <module>advanced-hibernate-core</module>
+    <module>advanced-hibernate-domain</module>
+    <module>advanced-hibernate-application</module>
+    <module>advanced-hibernate-infrastructure</module>
+    <module>advanced-hibernate-api</module>
+    <module>code-integrity-tests</module>
+  </modules>
+
+  <properties>
+    <java.version>26</java.version>
+    <maven.compiler.release>26</maven.compiler.release>
+    <hibernate.version>7.4.11.Final</hibernate.version>
+    <hibernate-validator.version>9.1.4.Final</hibernate-validator.version>
+    <springdoc.version>3.1.1</springdoc.version>
+    <archunit.version>1.5.0</archunit.version>
+    <ehcache.version>3.11.1</ehcache.version>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <release>26</release>
+            <parameters>true</parameters>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

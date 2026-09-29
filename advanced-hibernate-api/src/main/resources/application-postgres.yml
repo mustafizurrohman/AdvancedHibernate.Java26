@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hibernate_advanced}
+    username: ${DB_USERNAME:hibernate}
+    password: ${DB_PASSWORD:hibernate}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
