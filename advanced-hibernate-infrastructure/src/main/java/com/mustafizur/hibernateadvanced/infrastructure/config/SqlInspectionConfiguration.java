@@ -9,12 +9,17 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SqlInspectionConfiguration {
-    @Bean StatementInspector statementInspector() {
+    @Bean
+    StatementInspector statementInspector() {
         var log = LoggerFactory.getLogger("hibernate.sql.inspector");
-        return sql -> { log.debug("SQL inspector: {}", sql); return sql; };
+        return sql -> {
+            log.debug("SQL inspector: {}", sql);
+            return sql;
+        };
     }
 
-    @Bean HibernatePropertiesCustomizer statementInspectorCustomizer(StatementInspector inspector) {
+    @Bean
+    HibernatePropertiesCustomizer statementInspectorCustomizer(StatementInspector inspector) {
         return props -> props.put(AvailableSettings.STATEMENT_INSPECTOR, inspector);
     }
 }

@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderCommandService {
     private final OrderRepository orders;
-    public OrderCommandService(OrderRepository orders) { this.orders = orders; }
+
+    public OrderCommandService(OrderRepository orders) {
+        this.orders = orders;
+    }
 
     @Transactional
     public java.util.UUID create(CreateOrderCommand command) {

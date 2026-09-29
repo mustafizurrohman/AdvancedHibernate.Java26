@@ -14,19 +14,45 @@ import java.util.UUID;
 public class ShowcaseController {
     private final HibernateShowcaseService showcase;
     private final AnalyticsPort analytics;
-    public ShowcaseController(HibernateShowcaseService showcase, AnalyticsPort analytics) { this.showcase=showcase; this.analytics=analytics; }
 
-    @GetMapping("/natural-id/{sku}") Object naturalId(@PathVariable String sku) {
-        var p = showcase.byNaturalId(sku); return java.util.Map.of("id", p.getId(), "sku", p.getSku(), "name", p.getName());
+    public ShowcaseController(HibernateShowcaseService showcase, AnalyticsPort analytics) {
+        this.showcase = showcase;
+        this.analytics = analytics;
     }
-    @GetMapping("/analytics/running-revenue") List<AnalyticsPort.RunningRevenue> runningRevenue(@RequestParam Instant from) { return analytics.runningRevenue(from); }
-    @GetMapping("/analytics/top-customers") List<AnalyticsPort.CustomerRank> topCustomers(@RequestParam(defaultValue="10") int limit) { return analytics.topCustomers(limit); }
-    @GetMapping("/criteria/products") Object criteria(@RequestParam(required=false) String name, @RequestParam(required=false) BigDecimal minPrice, @RequestParam(required=false) BigDecimal maxPrice) {
-        return showcase.criteriaProductSearch(name, minPrice, maxPrice).stream().map(p -> java.util.Map.of("id",p.getId(),"sku",p.getSku(),"name",p.getName(),"price",p.getPrice())).toList();
+
+    @GetMapping("/natural-id/{sku}")
+    Object naturalId(@PathVariable String sku) {
+        var p = showcase.byNaturalId(sku);
+        return java.util.Map.of("id", p.getId(), "sku", p.getSku(), "name", p.getName());
     }
-    @GetMapping("/cte/expensive-orders") Object cte(@RequestParam BigDecimal threshold) {
+
+    @GetMapping("/analytics/running-revenue")
+    List<AnalyticsPort.RunningRevenue> runningRevenue(@RequestParam Instant from) {
+        return analytics.runningRevenue(from);
+    }
+
+    @GetMapping("/analytics/top-customers")
+    List<AnalyticsPort.CustomerRank> topCustomers(@RequestParam(defaultValue = "10") int limit) {
+        return analytics.topCustomers(limit);
+    }
+
+    @GetMapping("/criteria/products")
+    Object criteria(@RequestParam(required = false) String name, @RequestParam(required = false) BigDecimal minPrice, @RequestParam(required = false) BigDecimal maxPrice) {
+        return showcase.criteriaProductSearch(name, minPrice, maxPrice).stream().map(p -> java.util.Map.of("id", p.getId(), "sku", p.getSku(), "name", p.getName(), "price", p.getPrice())).toList();
+    }
+
+    @GetMapping("/cte/expensive-orders")
+    Object cte(@RequestParam BigDecimal threshold) {
         return showcase.expensiveOrders(threshold).stream().map(o -> java.util.Map.of("id", o.getId(), "total", o.getTotalAmount(), "currency", o.getCurrency())).toList();
     }
-    @PostMapping("/inventory/{productId}/optimistic") void optimistic(@PathVariable UUID productId, @RequestParam int quantity) { showcase.reserveOptimistically(productId, quantity); }
-    @PostMapping("/inventory/{productId}/pessimistic") void pessimistic(@PathVariable UUID productId, @RequestParam int quantity) { showcase.reservePessimistically(productId, quantity); }
+
+    @PostMapping("/inventory/{productId}/optimistic")
+    void optimistic(@PathVariable UUID productId, @RequestParam int quantity) {
+        showcase.reserveOptimistically(productId, quantity);
+    }
+
+    @PostMapping("/inventory/{productId}/pessimistic")
+    void pessimistic(@PathVariable UUID productId, @RequestParam int quantity) {
+        showcase.reservePessimistically(productId, quantity);
+    }
 }

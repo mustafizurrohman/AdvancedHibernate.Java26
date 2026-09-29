@@ -12,7 +12,8 @@ import java.util.UUID;
 
 @Service
 public class EnversHistoryService {
-    @PersistenceContext private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
     @Transactional(readOnly = true)
     public List<Number> revisions(UUID orderId) {

@@ -19,7 +19,11 @@ import java.util.UUID;
 public class OrderController {
     private final OrderCommandService commands;
     private final OrderRepository orders;
-    public OrderController(OrderCommandService commands, OrderRepository orders) { this.commands=commands; this.orders=orders; }
+
+    public OrderController(OrderCommandService commands, OrderRepository orders) {
+        this.commands = commands;
+        this.orders = orders;
+    }
 
     @PostMapping
     ResponseEntity<Void> create(@RequestBody @Validated(ValidationGroups.OrderedChecks.class) CreateOrderCommand command) {

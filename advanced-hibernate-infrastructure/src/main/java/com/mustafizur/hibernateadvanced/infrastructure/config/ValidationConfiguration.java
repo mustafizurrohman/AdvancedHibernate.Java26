@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ValidationConfiguration {
-    @Bean ValidationConfigurationCustomizer valueExtractorCustomizer() {
+    @Bean
+    ValidationConfigurationCustomizer valueExtractorCustomizer() {
         return configuration -> configuration.addValueExtractor(new BoxValueExtractor());
     }
 
-    @Bean ProgrammaticValidationService programmaticValidationService(Validator validator) {
+    @Bean
+    ProgrammaticValidationService programmaticValidationService(Validator validator) {
         return new ProgrammaticValidationService(validator);
     }
 }

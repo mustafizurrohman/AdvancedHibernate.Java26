@@ -7,12 +7,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record RegisterCustomerCommand(
-    @NotBlank(groups = ValidationGroups.Basic.class)
-    @Size(max = 120, groups = ValidationGroups.Basic.class)
-    String name,
+        @NotBlank(groups = ValidationGroups.Basic.class)
+        @Size(max = 120, groups = ValidationGroups.Basic.class)
+        String name,
 
-    @NotBlank(groups = ValidationGroups.Basic.class)
-    @Email(groups = ValidationGroups.Basic.class)
-    @UniqueCustomerEmail(groups = ValidationGroups.ExpensiveChecks.class)
-    String email
-) { }
+        @NotBlank(groups = ValidationGroups.Basic.class)
+        @Email(groups = ValidationGroups.Basic.class)
+        @UniqueCustomerEmail(groups = ValidationGroups.ExpensiveChecks.class)
+        String email
+) {
+}

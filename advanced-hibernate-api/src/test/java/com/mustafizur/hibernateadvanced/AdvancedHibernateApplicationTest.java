@@ -5,5 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class AdvancedHibernateApplicationTest {
-    @Test void contextLoads() { }
+    @Test
+    void contextLoads() {
+    }
 }

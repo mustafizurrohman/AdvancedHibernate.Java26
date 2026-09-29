@@ -20,42 +20,58 @@ public class ValidationController {
     private final ProgrammaticValidationService programmatic;
     private final ValidationShowcaseService methods;
     private final Validator validator;
+
     public ValidationController(ProgrammaticValidationService programmatic, ValidationShowcaseService methods, Validator validator) {
-        this.programmatic=programmatic; this.methods=methods; this.validator=validator;
+        this.programmatic = programmatic;
+        this.methods = methods;
+        this.validator = validator;
     }
 
     @PostMapping("/container-elements")
-    Map<String,Object> containerElements(@RequestBody @Valid NewsletterRequest request) { return Map.of("accepted", true, "count", request.recipients().size()); }
+    Map<String, Object> containerElements(@RequestBody @Valid NewsletterRequest request) {
+        return Map.of("accepted", true, "count", request.recipients().size());
+    }
 
     @PostMapping("/date-range")
-    DateWindow dateRange(@RequestBody @Valid DateWindow window) { return window; }
+    DateWindow dateRange(@RequestBody @Valid DateWindow window) {
+        return window;
+    }
 
     @GetMapping("/method")
-    String methodValidation(@RequestParam Instant from, @RequestParam Instant to) { return methods.createReport(from, to); }
+    String methodValidation(@RequestParam Instant from, @RequestParam Instant to) {
+        return methods.createReport(from, to);
+    }
 
     @PostMapping("/programmatic")
-    Object programmatic(@RequestBody DateWindow window) { return programmatic.validate(window); }
+    Object programmatic(@RequestBody DateWindow window) {
+        return programmatic.validate(window);
+    }
 
     @PostMapping("/custom-container")
-    BoxRequest customContainer(@RequestBody @Valid BoxRequest request) { return request; }
+    BoxRequest customContainer(@RequestBody @Valid BoxRequest request) {
+        return request;
+    }
 
     @GetMapping("/metadata")
     Object metadata() {
         var descriptor = validator.getConstraintsForClass(DateWindow.class);
         return java.util.Map.of(
-            "beanConstrained", descriptor.isBeanConstrained(),
-            "classConstraints", descriptor.getConstraintDescriptors().stream().map(d -> d.getAnnotation().annotationType().getSimpleName()).toList(),
-            "properties", descriptor.getConstrainedProperties().stream().map(p -> p.getPropertyName()).sorted().toList()
+                "beanConstrained", descriptor.isBeanConstrained(),
+                "classConstraints", descriptor.getConstraintDescriptors().stream().map(d -> d.getAnnotation().annotationType().getSimpleName()).toList(),
+                "properties", descriptor.getConstrainedProperties().stream().map(p -> p.getPropertyName()).sorted().toList()
         );
     }
 
     public record NewsletterRequest(
-        @NotEmpty List<@Email String> recipients,
-        Map<@NotBlank String, @Size(max=50) String> attributes
-    ) { }
+            @NotEmpty List<@Email String> recipients,
+            Map<@NotBlank String, @Size(max = 50) String> attributes
+    ) {
+    }
 
-    public record BoxRequest(Box<@NotBlank String> value) { }
+    public record BoxRequest(Box<@NotBlank String> value) {
+    }
 
     @ValidDateRange
-    public record DateWindow(@NotNull LocalDate start, @NotNull LocalDate end) implements DateRange { }
+    public record DateWindow(@NotNull LocalDate start, @NotNull LocalDate end) implements DateRange {
+    }
 }

@@ -13,7 +13,10 @@ import java.net.URI;
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
     private final CustomerCommandService service;
-    public CustomerController(CustomerCommandService service) { this.service=service; }
+
+    public CustomerController(CustomerCommandService service) {
+        this.service = service;
+    }
 
     @PostMapping
     ResponseEntity<Void> register(@RequestBody @Validated(ValidationGroups.OrderedChecks.class) RegisterCustomerCommand command) {

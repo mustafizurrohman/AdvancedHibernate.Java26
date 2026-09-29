@@ -15,28 +15,62 @@ import java.util.UUID;
 @SoftDelete(columnName = "deleted")
 @NamedEntityGraph(name = "Customer.withOrders", attributeNodes = @NamedAttributeNode("orders"))
 public class CustomerJpaEntity {
-    @Id private UUID id;
-    @Version private long version;
-    @Column(nullable = false, length = 120) private String name;
-    @Column(nullable = false, unique = true, length = 320) private String email;
-    @Embedded private AddressEmbeddable address;
-    @JdbcTypeCode(SqlTypes.JSON) @Column(columnDefinition = "json") private CustomerPreferences preferences;
-    @Column(nullable = false) private Instant createdAt;
+    @Id
+    private UUID id;
+    @Version
+    private long version;
+    @Column(nullable = false, length = 120)
+    private String name;
+    @Column(nullable = false, unique = true, length = 320)
+    private String email;
+    @Embedded
+    private AddressEmbeddable address;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private CustomerPreferences preferences;
+    @Column(nullable = false)
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     private List<PurchaseOrderJpaEntity> orders = new ArrayList<>();
 
-    protected CustomerJpaEntity() { }
+    protected CustomerJpaEntity() {
+    }
+
     public CustomerJpaEntity(UUID id, String name, String email) {
-        this.id = id; this.name = name; this.email = email; this.createdAt = Instant.now();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.createdAt = Instant.now();
         this.preferences = new CustomerPreferences("en", false, List.of());
     }
-    public UUID getId() { return id; }
-    public long getVersion() { return version; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public List<PurchaseOrderJpaEntity> getOrders() { return orders; }
-    public void setAddress(AddressEmbeddable address) { this.address = address; }
-    public void setPreferences(CustomerPreferences preferences) { this.preferences = preferences; }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public List<PurchaseOrderJpaEntity> getOrders() {
+        return orders;
+    }
+
+    public void setAddress(AddressEmbeddable address) {
+        this.address = address;
+    }
+
+    public void setPreferences(CustomerPreferences preferences) {
+        this.preferences = preferences;
+    }
 }

@@ -11,8 +11,15 @@ public class TenantConfiguration {
     @Bean
     CurrentTenantIdentifierResolver<String> tenantIdentifierResolver() {
         return new CurrentTenantIdentifierResolver<>() {
-            @Override public String resolveCurrentTenantIdentifier() { return "demo-tenant"; }
-            @Override public boolean validateExistingCurrentSessions() { return true; }
+            @Override
+            public String resolveCurrentTenantIdentifier() {
+                return "demo-tenant";
+            }
+
+            @Override
+            public boolean validateExistingCurrentSessions() {
+                return true;
+            }
         };
     }
 

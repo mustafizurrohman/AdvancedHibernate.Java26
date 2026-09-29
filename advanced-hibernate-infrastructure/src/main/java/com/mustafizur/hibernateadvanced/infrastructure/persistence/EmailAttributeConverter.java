@@ -6,6 +6,13 @@ import jakarta.persistence.Converter;
 
 @Converter(autoApply = false)
 public class EmailAttributeConverter implements AttributeConverter<EmailAddress, String> {
-    @Override public String convertToDatabaseColumn(EmailAddress attribute) { return attribute == null ? null : attribute.value(); }
-    @Override public EmailAddress convertToEntityAttribute(String dbData) { return dbData == null ? null : new EmailAddress(dbData); }
+    @Override
+    public String convertToDatabaseColumn(EmailAddress attribute) {
+        return attribute == null ? null : attribute.value();
+    }
+
+    @Override
+    public EmailAddress convertToEntityAttribute(String dbData) {
+        return dbData == null ? null : new EmailAddress(dbData);
+    }
 }

@@ -11,7 +11,9 @@ import java.util.UUID;
 
 @Service
 public class CustomerCommandService {
-    @PersistenceContext private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
+
     @Transactional
     public UUID register(RegisterCustomerCommand command) {
         var id = UUID.randomUUID();

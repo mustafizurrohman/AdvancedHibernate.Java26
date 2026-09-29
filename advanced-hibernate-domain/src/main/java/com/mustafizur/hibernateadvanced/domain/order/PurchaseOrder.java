@@ -45,9 +45,23 @@ public final class PurchaseOrder extends AggregateRoot {
         return lines.stream().map(OrderLine::subtotal).reduce(new Money(java.math.BigDecimal.ZERO, currency), Money::add);
     }
 
-    public OrderId id() { return id; }
-    public CustomerId customerId() { return customerId; }
-    public List<OrderLine> lines() { return List.copyOf(lines); }
-    public OrderStatus status() { return status; }
-    public Instant placedAt() { return placedAt; }
+    public OrderId id() {
+        return id;
+    }
+
+    public CustomerId customerId() {
+        return customerId;
+    }
+
+    public List<OrderLine> lines() {
+        return List.copyOf(lines);
+    }
+
+    public OrderStatus status() {
+        return status;
+    }
+
+    public Instant placedAt() {
+        return placedAt;
+    }
 }

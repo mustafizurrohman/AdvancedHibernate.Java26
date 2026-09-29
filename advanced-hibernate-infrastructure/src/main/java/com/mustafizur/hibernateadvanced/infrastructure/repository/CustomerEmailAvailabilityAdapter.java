@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CustomerEmailAvailabilityAdapter implements CustomerEmailAvailabilityPort {
-    @PersistenceContext private EntityManager em;
-    @Override public boolean isAvailable(String email) {
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    public boolean isAvailable(String email) {
         return em.createQuery("select count(c) from CustomerJpaEntity c where lower(c.email) = lower(:email)", Long.class)
-            .setParameter("email", email).getSingleResult() == 0;
+                .setParameter("email", email).getSingleResult() == 0;
     }
 }
